@@ -1,0 +1,15 @@
+{
+  "name": "nutrilens-backend",
+  "version": "1.0.0",
+  "description": "Vercel API backend proxy and key lease system for NutriLens",
+  "main": "api/analyze.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

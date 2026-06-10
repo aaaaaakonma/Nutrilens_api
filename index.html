@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NutriLens API Documentation</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-post {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .endpoint-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .endpoint-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .endpoint-header {
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .endpoint-path {
+      font-family: monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #3b82f6;
+    }
+
+    .endpoint-summary {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .endpoint-body {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .endpoint-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    pre {
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+    }
+
+    .field-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .field-table th, .field-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .field-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .field-name {
+      font-family: monospace;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .field-type {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .field-required {
+      font-size: 0.75rem;
+      color: #ef4444;
+      background-color: rgba(239, 68, 68, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .try-it-btn {
+      display: inline-block;
+      width: 100%;
+      background-color: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .try-it-btn:hover {
+      background-color: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>NutriLens API Reference</h1>
+      <p class="subtitle">Secure serverless proxy endpoints for Gemini AI model leasing and analysis</p>
+    </header>
+
+    <!-- LEASE ENDPOINT -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-post">POST</span>
+        <span class="endpoint-path">/api/lease</span>
+        <span class="endpoint-summary">Generate a temporary authorization lease token</span>
+      </div>
+      <div class="endpoint-body">
+        <div>
+          <h3 class="section-title">Request Body</h3>
+          <table class="field-table">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="field-name">secret</span> <span class="field-required">Required</span></td>
+                <td><span class="field-type">string</span></td>
+                <td>Internal client secret key (e.g. <code>Somnia</code>)</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre>{
+  "secret": "Somnia"
+}</pre>
+        </div>
+        <div>
+          <h3 class="section-title">Success Response (200 OK)</h3>
+          <pre>{
+  "token": "17822998394.a1b2c3d4e5f6g7h8i9j0...",
+  "expiresAt": 1782299839400
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYZE ENDPOINT -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="badge badge-post">POST</span>
+        <span class="endpoint-path">/api/analyze</span>
+        <span class="endpoint-summary">Perform nutritional analysis of text or image</span>
+      </div>
+      <div class="endpoint-body">
+        <div>
+          <h3 class="section-title">Headers</h3>
+          <table class="field-table">
+            <thead>
+              <tr>
+                <th>Header</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="field-name">Authorization</span> <span class="field-required">Required</span></td>
+                <td><span class="field-type">string</span></td>
+                <td><code>Bearer &lt;lease_token&gt;</code></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3 class="section-title" style="margin-top: 20px;">Request Body (Text)</h3>
+          <pre>{
+  "type": "text",
+  "text": "3 scrambled eggs and avocado toast"
+}</pre>
+
+          <h3 class="section-title" style="margin-top: 20px;">Request Body (Image)</h3>
+          <pre>{
+  "type": "image",
+  "image": "base64_encoded_image_bytes...",
+  "mimeType": "image/jpeg",
+  "text": "optional description text"
+}</pre>
+        </div>
+        <div>
+          <h3 class="section-title">Success Response (200 OK)</h3>
+          <pre>{
+  "name": "Scrambled Eggs with Avocado Toast",
+  "protein": 21.5,
+  "fat": 18.0,
+  "carbs": 24.5
+}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

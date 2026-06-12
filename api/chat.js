@@ -75,7 +75,7 @@ ${context || 'No specific context provided.'}
 Provide helpful, friendly, and actionable dietary advice, suggestions, and answers based on the user's profile, location, and weekly logs. Keep your answers relatively concise, encouraging, and focused on healthy habits.`;
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-3.1-flash-lite',
       systemInstruction: systemInstruction,
     });
 

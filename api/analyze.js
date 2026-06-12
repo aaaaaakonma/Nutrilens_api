@@ -79,31 +79,41 @@ module.exports = async (req, res) => {
     if (type === 'text') {
       const prompt = `
 Analyze this food description: "${text}".
-Estimate the macronutrient contents in grams (protein, fat, carbs) for a reasonable standard serving size or the size specified in the text.
-Return a JSON object containing the food name, protein, fat, and carbs.
+Estimate the macronutrient contents in grams (protein, fat, carbs) and micronutrient contents (fiber in grams, iron in milligrams, sodium in milligrams, calcium in milligrams, potassium in milligrams) for a reasonable standard serving size or the size specified in the text.
+Return a JSON object containing the food name, protein, fat, carbs, fiber, iron, sodium, calcium, and potassium.
 The JSON must follow this exact format:
 {
   "name": "Short Name of the Food (e.g. Oatmeal with Bananas)",
   "protein": 12.5,
   "fat": 4.5,
-  "carbs": 45.0
+  "carbs": 45.0,
+  "fiber": 4.0,
+  "iron": 1.8,
+  "sodium": 5.0,
+  "calcium": 25.0,
+  "potassium": 150.0
 }
-Use double numbers for protein, fat, and carbs. Be realistic. If the description is not food, estimate 0.0 for macros.
+Use double numbers for all nutrients. Be realistic. If the description is not food, estimate 0.0 for all nutrient values.
 `;
       result = await model.generateContent(prompt);
     } else {
       // image mode
       let prompt = `
-Analyze this food image. Estimate the macronutrient contents in grams (protein, fat, carbs) for the entire portion shown in the image.
-Return a JSON object containing the food name, protein, fat, and carbs.
+Analyze this food image. Estimate the macronutrient contents in grams (protein, fat, carbs) and micronutrient contents (fiber in grams, iron in milligrams, sodium in milligrams, calcium in milligrams, potassium in milligrams) for the entire portion shown in the image.
+Return a JSON object containing the food name, protein, fat, carbs, fiber, iron, sodium, calcium, and potassium.
 The JSON must follow this exact format:
 {
   "name": "Short Name of the Food (e.g. Avocado Toast with Egg)",
   "protein": 15.0,
   "fat": 12.0,
-  "carbs": 28.0
+  "carbs": 28.0,
+  "fiber": 5.5,
+  "iron": 2.1,
+  "sodium": 340.0,
+  "calcium": 45.0,
+  "potassium": 280.0
 }
-Use double numbers for protein, fat, and carbs. Be realistic. If there is no food in the image, estimate 0.0 for macros.
+Use double numbers for all nutrients. Be realistic. If there is no food in the image, estimate 0.0 for all nutrient values.
 `;
       if (text && text.trim().length > 0) {
         prompt += `\nAdditional user description/context for accuracy: "${text}"`;

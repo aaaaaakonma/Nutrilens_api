@@ -75,15 +75,24 @@ ${context || 'No specific context provided.'}
 Provide helpful, friendly, and actionable dietary advice, suggestions, and answers based on the user's profile, location, and weekly logs. Keep your answers relatively concise, encouraging, and focused on healthy habits.`;
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-3.1-flash-lite',
+      model: 'gemini-1.5-flash',
       systemInstruction: systemInstruction,
     });
 
     // Map history to Google Generative AI format
-    const formattedHistory = (history || []).map(msg => ({
+    let formattedHistory = (history || []).map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.message || msg.text || '' }]
     }));
+
+    // Gemini requires the first turn to be from the 'user'.
+    // We slice the history to start at the first 'user' message.
+    const firstUserIdx = formattedHistory.findIndex(msg => msg.role === 'user');
+    if (firstUserIdx !== -1) {
+      formattedHistory = formattedHistory.slice(firstUserIdx);
+    } else {
+      formattedHistory = [];
+    }
 
     const chat = model.startChat({
       history: formattedHistory,

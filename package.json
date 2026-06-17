@@ -7,7 +7,9 @@
     "start": "vercel dev"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.21.0"
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "swagger-ui-dist": "^5.32.6"
   },
   "devDependencies": {
     "dotenv": "^16.4.5"
